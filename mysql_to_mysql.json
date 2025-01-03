@@ -1,0 +1,56 @@
+{
+  "job": {
+    "setting": {
+      "speed": {
+        "channel": 3
+      },
+      "errorLimit": {
+        "record": 0,
+        "percentage": 0.02
+      }
+    },
+    "content": [
+      {
+        "reader": {
+          "name": "mysqlreader",
+          "parameter": {
+            "username": "root",
+            "password": "123456",
+            "connection": [
+              {
+                "querySql": [
+                  "SELECT * from tc_biz_vertical_test_0000 tbvt WHERE gmt_modified >= date_add(now(), interval - 10 minute);"
+                ],
+                "jdbcUrl": [
+                  "jdbc:mysql://localhost:3306/datax_test?useSSL=false"
+                ]
+              }
+            ]
+          }
+        },
+        "writer": {
+          "name": "mysqlwriter",
+          "parameter": {
+            "writeMode": "replace",
+            "username": "root",
+            "password": "123456",
+            "column": [
+              "*"
+            ],
+            "session": [
+              "set session sql_mode='ANSI'"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": "jdbc:mysql://localhost:3307/datax_test?useSSL=false",
+                "table": [
+                  "tc_biz_vertical_test_0000"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
